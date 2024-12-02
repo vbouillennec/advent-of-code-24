@@ -5,8 +5,13 @@ const input = fs.readFileSync("./01/input.txt").toString();
 const lines = input.split("\n");
 
 // split each line into left and right locations
-const leftLocations = lines.map((line) => parseInt(line.split("   ")[0]));
-const rightLocations = lines.map((line) => parseInt(line.split("   ")[1]));
+const leftLocations = [];
+const rightLocations = [];
+for (let i = 0; i < lines.length; i++) {
+	const [left, right] = lines[i].split("   ");
+	leftLocations.push(parseInt(left));
+	rightLocations.push(parseInt(right));
+}
 
 // sort the locations
 const leftLocationsSorted = leftLocations.sort((a, b) => a - b);
