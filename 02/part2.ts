@@ -51,7 +51,6 @@ for (let i = 0; i < reports.length; i++) {
 	
 	if(isSafe) {
 		safeReports.push(i);
-		continue;
 	} else if(checkByRemovingLevel(levels)) {
 		safeReports.push(i);
 	}
