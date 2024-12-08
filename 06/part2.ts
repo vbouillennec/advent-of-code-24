@@ -1,5 +1,7 @@
 import fs from "fs";
 
+const start = performance.now();
+
 const input = fs.readFileSync("./06/input.txt").toString();
 
 const map2D = input.split("\r\n").map((row) => row.split(''));
@@ -100,21 +102,21 @@ class Guard {
 	}
 
 	turnRight() {
-		// going right
-		if(this.direction.row === -1 && this.direction.col === 0) {
-			this.direction = new Position(0, 1);
+		// if up going right
+		if(this.direction.compareTo(<Position>directions.get('up'))) {
+			this.direction = <Position>directions.get('right');
 		}
-		// going down
-		else if(this.direction.row === 0 && this.direction.col === 1) {
-			this.direction = new Position(1, 0);
+		// if right going down
+		else if(this.direction.compareTo(<Position>directions.get('right'))) {
+			this.direction = <Position>directions.get('down');
 		}
-		// going left
-		else if(this.direction.row === 1 || this.direction.col === 0) {
-			this.direction = new Position(0, -1);
+		// if down going left
+		else if(this.direction.compareTo(<Position>directions.get('down'))) {
+			this.direction = <Position>directions.get('left');
 		}
-		// going up
-		else if(this.direction.row === 0 && this.direction.col === -1) {
-			this.direction = new Position(-1, 0);
+		// if left going up
+		else if(this.direction.compareTo(<Position>directions.get('left'))) {
+			this.direction = <Position>directions.get('up');
 		}
 	}
 
@@ -162,12 +164,19 @@ let guard  = new Guard();
 guard.init();
 guard.buildInitialPath();
 
-let nbOfObstructions = 0;
-for(let i = 1; i < guard.path.length; i++) {
-	if(checkLoop(guard.path[i].position)) {
-		nbOfObstructions++;
-	}
-}
+const nbOfObstructions = guard.path.filter((pos, i) => {
+	process.stdout.write(`progress: ${Math.floor(i * 100 / guard.path.length)}%\r`);
+	if(i === 0) return false;
+	return checkLoop(pos.position);
+}).length;
 
 console.log(`There are ${nbOfObstructions} possible obstruction positions to loop the guard`);
 
+const end = performance.now();
+const executionTime = (end - start)
+
+// Convert to minutes and seconds
+const minutes = Math.floor(executionTime / 60000);
+const seconds = ((executionTime % 60000) / 1000).toFixed(2);
+
+console.log(`Execution Time: ${minutes} minutes and ${seconds} seconds`);
