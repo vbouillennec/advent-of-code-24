@@ -64,4 +64,4 @@ const result = correctEquations.reduce((prev, curr) => {
 	return prev + curr.result;
 }, 0);
 
-console.log({correctEquations, result});
+console.log({result});
