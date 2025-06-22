@@ -81,25 +81,25 @@
 
 #### Via SSH
 
-```
+```bash
 git clone git@github.com:vbouillennec/advent-of-code-24.git
 ```
 
 #### Via HTTPS
 
-```
+```bash
 git clone https://github.com/vbouillennec/advent-of-code-24.git
 ```
 
 ### Install modules
 
-```
+```bash
 npm i
 ```
 
 ### Run a specific day
 
-```
+```bash
 npx ts-node 01/part1.ts
 ```
 
