@@ -160,7 +160,7 @@ const checkLoop = (pos: Position) => {
 	return newGuard.looping;
 }
 
-let guard  = new Guard();
+const guard  = new Guard();
 guard.init();
 guard.buildInitialPath();
 

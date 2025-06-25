@@ -17,7 +17,7 @@ class Position {
 	}
 }
 
-const map2D = input.split("\n").map((row, i) => row.trim().split(""));
+const map2D = input.split("\n").map((row) => row.trim().split(""));
 
 const wordToFind = "XMAS".split("");
 
@@ -66,8 +66,8 @@ const findWordInDirection = (startingPos: Position, direction: Position) => {
 	}
 }
 
-let letterToFindIndex = 0;
-let letterToFind = wordToFind.at(letterToFindIndex);
+const letterToFindIndex = 0;
+const letterToFind = wordToFind.at(letterToFindIndex);
 for(let row = 0; row < map2D.length; row++) {
 	for(let col = 0; col < map2D[row].length; col++) {
 		if(map2D[row][col] === letterToFind) {

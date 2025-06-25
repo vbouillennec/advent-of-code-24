@@ -1,4 +1,3 @@
-import { equal } from "assert";
 import fs from "fs";
 
 const input = fs.readFileSync("./12/input.txt").toString();

@@ -17,12 +17,6 @@ class ClawMachine {
 
 const input = fs.readFileSync(`13/${inputTextName}.txt`).toString();
 
-const extendedGcd = (a, b) => {
-	if (b === 0) return { gcd: a, x: 1, y: 0 };
-	const { gcd, x, y } = extendedGcd(b, a % b);
-	return { gcd, x: y, y: x - Math.floor(a / b) * y };
-}
-
 const clawMachines = input.split('\r\n\r\n').map((block: string) => {
 	const lines = block.split('\r\n');
 
@@ -89,67 +83,5 @@ function bezout(a, b) {
 	}
 }
 
-
 const minTokensRequired = minTokens(clawMachines);
 console.log(minTokensRequired); // Output: 480
-
-// clawMachines.forEach((clawMachine) => {
-// 	const ax = clawMachine.AButton.x;
-// 	const ay = clawMachine.AButton.y;
-// 	const bx = clawMachine.BButton.x;
-// 	const by = clawMachine.BButton.y;
-// 	const px = clawMachine.prize.x;
-// 	const py = clawMachine.prize.y;
-
-// 	const gcdX = extendedGcd(ax, bx).gcd;
-// 	const gcdY = extendedGcd(ay, by).gcd;
-
-// 	console.log({ gcdX, gcdY });
-
-// 	if (px % gcdX !== 0 || py % gcdY !== 0) {
-// 		console.log(`No solution for ${clawMachine}`);
-
-// 		return null; // Pas de solution possible
-// 	}
-
-// 	// Résoudre pour X avec le PGCD
-// 	const { x: ux, y: vx } = extendedGcd(ax, bx);
-// 	const scaleX = px / gcdX;
-// 	console.log({ ux, vx, scaleX });
-// 	let aX = ux * scaleX, bX = vx * scaleX;
-// 	console.log({ aX, bX });
-
-// 	// Réduire modulo pour minimiser les mouvements sur X
-// 	const modX = bx / gcdX;
-// 	const kX = Math.floor(bX / modX);
-// 	aX -= kX * modX;
-// 	bX += kX * (ax / gcdX);
-
-// 	// Résoudre pour Y avec le PGCD
-// 	const { x: uy, y: vy } = extendedGcd(ay, by);
-// 	const scaleY = py / gcdY;
-// 	let aY = uy * scaleY, bY = vy * scaleY;
-
-// 	// Réduire modulo pour minimiser les mouvements sur Y
-// 	const modY = by / gcdY;
-// 	const kY = Math.floor(bY / modY);
-// 	aY -= kY * modY;
-// 	bY += kY * (ay / gcdY);
-
-// 	// Calculer le coût total
-// 	const totalA = Math.round(aX + aY);
-// 	const totalB = Math.round(bX + bY);
-// 	const cost = totalA * 3 + totalB;
-
-// 	console.log({ cost, totalA, totalB });
-
-// 	process.exit();
-
-// 	return {
-// 		totalCost: cost,
-// 		aPress: totalA,
-// 		bPress: totalB,
-// 	};
-
-// 	// console.log({movesForX, movesForY});
-// });

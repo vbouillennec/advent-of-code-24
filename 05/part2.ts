@@ -10,11 +10,11 @@ class Order {
 }
 
 const sortPages = (orderingRules: Order[], update: number[]) => {
-	let sortedPages = [...update].sort((a, b) => {
+	const sortedPages = [...update].sort((a, b) => {
 		if(orderingRules.find((rule) => rule.before === a && rule.after === b)){
 			return -1;
 		}
-		if(orderingRules.find((rule) => rule.before === a && rule.after === b)){
+		if(orderingRules.find((rule) => rule.before === b && rule.after === a)){
 			return 1;
 		}
 		return 0;

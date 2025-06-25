@@ -69,7 +69,7 @@ class StoneLine {
 	}
 }
 
-const stoneLine = new StoneLine(input.trim().split(" ").map((stone, index) => {
+const stoneLine = new StoneLine(input.trim().split(" ").map((stone) => {
 	return new Stone(Number(stone));
 }));
 

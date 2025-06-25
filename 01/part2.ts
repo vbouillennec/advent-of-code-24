@@ -19,7 +19,7 @@ const rightLocationsSorted = rightLocations.sort((a, b) => a - b);
 
 // calculate the similarity score
 // sum of the product of the left location and the number of times it appears in the right locations
-const similarityScore = leftLocationsSorted.reduce((acc, location, index) => {
+const similarityScore = leftLocationsSorted.reduce((acc, location) => {
 	const score = location * rightLocationsSorted.filter(rloc => rloc === location).length;
 	return acc + score;
 }, 0);

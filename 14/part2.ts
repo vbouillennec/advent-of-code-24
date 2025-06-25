@@ -55,7 +55,7 @@ class Map {
 				robot.position.x = newPosX;
 				robot.position.y = newPosY;
 			}
-			let [nbQuad1, nbQuad2, nbQuad3, nbQuad4] = this.getQuadrants();
+			const [nbQuad1, nbQuad2, nbQuad3, nbQuad4] = this.getQuadrants();
 			if(nbQuad1 === nbQuad2 && nbQuad3 === nbQuad4) {
 				process.stdout.write(`\rexecution N°: ${i}`);
 				
@@ -69,7 +69,7 @@ class Map {
 
 	checkSymetry() {
 		let isSymetric = true;
-		for (let robot of this.robots) {
+		for (const robot of this.robots) {
 			if(robot.position.x === Math.floor(this.width / 2)) {
 				continue;
 			}

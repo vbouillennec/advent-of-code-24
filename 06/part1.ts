@@ -122,7 +122,7 @@ const getGuardInitialPosAndDirection = (map2D: string[][]): Guard => {
 
 // console.log(map2D);
 
-let guard  = getGuardInitialPosAndDirection(map2D);
+const guard  = getGuardInitialPosAndDirection(map2D);
 
 guard.addToPath();
 while(guard.donePatrolling === false) {

@@ -20,8 +20,6 @@ const directions = [
 	new Position(1, 1),
 ];
 
-let nbOfWordsFound = 0;
-
 const wordsCenters: Position[] = [];
 
 const getOppositeDirection = (startingPos: Position, direction: Position) => {
@@ -47,7 +45,6 @@ const findLetterBeforeAndAfter = (centralPos: Position, letterIndex: number) => 
 				continue;
 			}
 			if(map2D[oppositeRow][oppositeCol] === wordToFind.at(letterIndex + 1)) {
-				nbOfWordsFound++;
 				wordsCenters.push(centralPos);
 			}
 		}
@@ -55,8 +52,8 @@ const findLetterBeforeAndAfter = (centralPos: Position, letterIndex: number) => 
 }
 
 // We looking for A the central letter of the word MAS
-let letterToFindIndex = 1;
-let letterToFind = wordToFind.at(letterToFindIndex);
+const letterToFindIndex = 1;
+const letterToFind = wordToFind.at(letterToFindIndex);
 for(let row = 0; row < map2D.length; row++) {
 	for(let col = 0; col < map2D[row].length; col++) {
 		if(map2D[row][col] === letterToFind) {

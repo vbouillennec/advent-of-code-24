@@ -23,11 +23,6 @@ const directions = new Map([
     ['up', { row: -1, col: 0 }],
 ]);
 
-let score = 0;
-let invert = false;
-// let currDir = 'right';
-let currPos: Position = { row: 0, col: 0 };
-
 const canMove = (nextPos: Position): boolean => {
     return (map2D[nextPos.row][nextPos.col] !== '#');
 }
@@ -68,7 +63,6 @@ const findLowestCost = (map2D) => {
     const rows = map2D.length;
     const cols = map2D[0].length;
     let startPos: Position = { row: -1, col: -1 };
-    let endPos: Position = { row: -1, col: -1 };
     let bestPaths = 0;
     let pathsFound = 0;
     const viewedArray: string[][] = [];
@@ -77,8 +71,6 @@ const findLowestCost = (map2D) => {
         for (let col = 0; col < cols; col++) {
             if (map2D[row][col] === 'S') {
                 startPos = { row, col };
-            } else if (map2D[row][col] === 'E') {
-                endPos = { row, col }
             }
         }
     }
@@ -107,12 +99,8 @@ const findLowestCost = (map2D) => {
         // Si on est arrivé à la fin, on retourne le coût
         if(hasArrived(pos) && (bestPaths === 0 || bestPaths >= cost)) {
             pathsFound++;
-            // console.log(`viewed : `+ viewed.toString());
             viewedArray.push(viewedCopy1);
-            // console.log(`Path found: ${viewed.toString()}`);
-            // console.log(`Arrived at end position: ${pos.row}, ${pos.col} with cost: ${cost}`);
             bestPaths = cost;
-            // return cost;
         }
 
         const key = stateKey(pos, dir);
@@ -144,4 +132,4 @@ const findLowestCost = (map2D) => {
     return -1; // No path found
 }
 
-const lowestScore = findLowestCost(map2D);
+findLowestCost(map2D);

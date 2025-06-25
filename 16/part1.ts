@@ -22,11 +22,6 @@ const directions = new Map([
 	['up', { row: -1, col: 0 }],
 ]);
 
-let score = 0;
-let invert = false;
-// let currDir = 'right';
-let currPos: Position = { row: 0, col: 0 };
-
 const canMove = (nextPos: Position): boolean => {
 	return (map2D[nextPos.row][nextPos.col] !== '#');
 }
@@ -58,14 +53,11 @@ const findLowestCost = (map2D) => {
 	const rows = map2D.length;
 	const cols = map2D[0].length;
 	let startPos: Position = { row: -1, col: -1 };
-	let endPos: Position = { row: -1, col: -1 };
 
 	for (let row = 0; row < rows; row++) {
 		for (let col = 0; col < cols; col++) {
 			if (map2D[row][col] === 'S') {
 				startPos = { row, col };
-			} else if (map2D[row][col] === 'E') {
-				endPos = { row, col }
 			}
 		}
 	}

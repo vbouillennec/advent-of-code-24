@@ -6,7 +6,7 @@ const regex = /mul\((\d+),(\d+)\)|do\(\)|don't\(\)/g;
 
 const multiply = (a: number, b: number) => a * b;
 
-let matches = input.matchAll(regex);
+const matches = input.matchAll(regex);
 
 let result = 0;
 let calculate = true;

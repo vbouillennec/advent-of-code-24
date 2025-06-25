@@ -48,7 +48,7 @@ class Region {
 	}
 
 	getAngles(position: Position) {
-		diagDirections.forEach((direction, dirName) => {
+		diagDirections.forEach((direction) => {
 			const [dx, dy] = direction;
 			const newPos = {row: position.row + dx, col: position.col + dy};
 			if(

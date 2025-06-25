@@ -70,8 +70,8 @@ class Map2D {
 			this.trailsFound++;
 			// trailTails.add(trailhead);
 		}
-		let currentTrail = trailhead;
-		directions.forEach((direction, key) => {
+		const currentTrail = trailhead;
+		directions.forEach((direction) => {
 			const newPos = currentTrail.addPos(direction);
 			if(newPos && currentTrail.isValidNextPos(newPos)) {
 				this.findTrails(newPos, trailTails);

@@ -83,7 +83,7 @@ class Warehouse {
 	}
 
 	moveObject(object: string, position: Position, movement: string): boolean {
-		let {x, y} = this.getNextPos(position, movement);
+		const {x, y} = this.getNextPos(position, movement);
 		if(this.map2D[x][y] === '#') {
 			return false;
 		}

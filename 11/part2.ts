@@ -10,7 +10,7 @@ const split = (stone: number) => {
 	return [left, right];
 }
 
-let cache = new Map();
+const cache = new Map();
 
 const calcForAStone = (stone: number, nbOfBlinks: number) => {
 	let result = 0;

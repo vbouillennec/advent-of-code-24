@@ -42,7 +42,7 @@ class Disk {
 
 	createDiskMap() {
 		this.diskMap = this.blockFiles.reduce((acc, cur, i) => {
-			let blockPart = new Array(cur.size).fill(cur.id);
+			const blockPart = new Array(cur.size).fill(cur.id);
 			let freePart = [];
 			if(i < this.freeSpaces.length) {
 				freePart = new Array(this.freeSpaces[i].size).fill('.');

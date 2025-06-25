@@ -21,7 +21,7 @@ const executeOperation = (numbers: number[], execution: string[]) => {
 	}, numbers[0]);
 }
 
-const recursiveLoop = (nbOfLoops: number, opeToExecute: string [][], line:number, copyOpe: string[]): number => {
+const recursiveLoop = (nbOfLoops: number, opeToExecute: string [][], line:number): number => {
 	if(nbOfLoops === 0) return line;
 	for(let i = 0; i < possibleOpe.length; i++) {
 		const copyOpe = [...opeToExecute[line]];
@@ -37,7 +37,7 @@ const recursiveLoop = (nbOfLoops: number, opeToExecute: string [][], line:number
 
 const generateOperatorsToExecute = (nbOperatorsPerLine: number) => {
 	const opeToExecute: string[][] = [];
-	let line = 0;
+	const line = 0;
 	opeToExecute[line] = [];
 	recursiveLoop(nbOperatorsPerLine, opeToExecute, line, []);
 	opeToExecute.pop();
@@ -58,7 +58,7 @@ const equations = input.split('\r\n').map((eq) => {
 	return new Equation(parseInt(result), numbers.trim().split(' ').map((n) => parseInt(n)));
 });
 
-const correctEquations = equations.filter((eq, i) => findCorrectEquation(eq));
+const correctEquations = equations.filter((eq) => findCorrectEquation(eq));
 
 const result = correctEquations.reduce((prev, curr) => {
 	return prev + curr.result;
