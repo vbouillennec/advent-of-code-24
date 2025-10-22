@@ -1,107 +1,121 @@
+/**
+ * ❌ Advent of Code 2024 - Day 17 - Part 2 (Abandonné)
+ * https://adventofcode.com/2024/day/17
+ *
+ * Solution by: Valentin Bouillennec
+ */
+
 import fs from "fs";
 
-const input = fs.readFileSync("./17/input3.txt").toString();
+const input = fs.readFileSync("./17/input2.txt").toString();
 
 const lines = input.split("\r\n");
 
 let iPointer = 0;
-let registerA = 0;
-let registerB = 0;
-let registerC = 0;
-let program: number[] = [];
-const output: number[] = [];
+let initRegisterA = 0;
+let initRegisterB = 0;
+let initRegisterC = 0;
+let globalRegisterA = initRegisterA;
+let globalRegisterB = initRegisterB;
+let globalRegisterC = initRegisterC;
+let initProgram: number[] = [];
+let output: number[] = [];
 
 lines.forEach((line) => {
   if (line.includes("Register A: ")) {
-	registerA = Number(line.split(": ")[1]);
+	  initRegisterA = Number(line.split(": ")[1]);
   } else if (line.includes("Register B: ")) {
-	registerB = Number(line.split(": ")[1]);
+	  initRegisterB = Number(line.split(": ")[1]);
   } else if (line.includes("Register C: ")) {
-	registerC = Number(line.split(": ")[1]);
+	  initRegisterC = Number(line.split(": ")[1]);
   } else if (line.includes("Program: ")) {
-	program = line.split(": ")[1].split(',').map(Number);
+	  initProgram = line.split(": ")[1].split(',').map(Number);
   }
 });
 
-console.log(`Register A: ${registerA}`);
-console.log(`Register B: ${registerB}`);
-console.log(`Register C: ${registerC}`);
-console.log(`Program: ${program}`);
+console.log(`Register A: ${initRegisterA}`);
+console.log(`Register B: ${initRegisterB}`);
+console.log(`Register C: ${initRegisterC}`);
+console.log(`Program: ${initProgram}`);
 
-function executeProgram(program: number[]) {
-  // let programPointer = 0;
+function executeProgram(program: number[]): number[] {
+  iPointer = 0;
+  output = [];
   let opcode = 0;
   let operand = 0;
+  globalRegisterA = initRegisterA;
+  globalRegisterB = initRegisterB;
+  globalRegisterC = initRegisterC;
+  
   while(iPointer < program.length) {
-	opcode = program[iPointer];
-	operand = program[iPointer + 1];
-	switch (opcode) {
-	  case 0:
-		adv(operand);
-		break;
-	  case 1:
-		bxl(operand);
-		break;
-	  case 2:
-		bst(operand);
-		break;
-	  case 3:
-		{
-		  const ip = jnz(operand);
-		  if(ip !== null) {
-			iPointer = ip;
-			continue;
-		  }
-		}
-		break;
-	  case 4:
-		bxc();
-		break;
-	  case 5:
-		out(operand);
-		break;
-	  case 6:
-		bdv(operand);
-		break;
-	  case 7:
-		cdv(operand);
-		break;
-	  default:
-		break;
-	}
-	iPointer = iPointer + 2
+    opcode = program[iPointer];
+    operand = program[iPointer + 1];
+    switch (opcode) {
+      case 0:
+      adv(operand);
+      break;
+      case 1:
+      bxl(operand);
+      break;
+      case 2:
+      bst(operand);
+      break;
+      case 3:
+      {
+        const ip = jnz(operand);
+        if(ip !== null) {
+        iPointer = ip;
+        continue;
+        }
+      }
+      break;
+      case 4:
+      bxc();
+      break;
+      case 5:
+      out(operand);
+      break;
+      case 6:
+      bdv(operand);
+      break;
+      case 7:
+      cdv(operand);
+      break;
+      default:
+      break;
+    }
+    iPointer = iPointer + 2
   }
-  // print output
-  console.log('output: ' + output.join(','))
+  return output;
 }
 
 // opcode 0
 function adv(operand: number) {
   const opv = operandValue(operand);
-  registerA = Math.trunc(registerA / Math.pow(2, opv));
+  globalRegisterA = Math.trunc(globalRegisterA / Math.pow(2, opv));
 }
 
 // opcode 1
 function bxl(operand: number) {
-  registerB = registerB ^ operand;
+  globalRegisterB = globalRegisterB ^ operand;
 }
 
 // opcode 2
 function bst(operand: number) {
   const opv = operandValue(operand);
-  registerB = opv % 8;
+  globalRegisterB = opv % 8;
 }
 
 // opcode 3
 function jnz(operand: number) {
-  if(registerA === 0)
+  if(globalRegisterA === 0)
 	return null;
   return operand;
 }
 
 // opcode 4
 function bxc() {
-  registerB = registerB ^ registerC;
+  globalRegisterB = globalRegisterB ^ globalRegisterC;
 }
 
 // opcode 5
@@ -114,22 +128,22 @@ function out(operand: number) {
 // opcode 6
 function bdv(operand: number) {
   const opv = operandValue(operand);
-  registerB = Math.trunc(registerA / Math.pow(2, opv));
+  globalRegisterB = Math.trunc(globalRegisterA / Math.pow(2, opv));
 }
 
 // opcode 7
 function cdv(operand: number) {
   const opv = operandValue(operand);
-  registerC = Math.trunc(registerA / Math.pow(2, opv));
+  globalRegisterC = Math.trunc(globalRegisterA / Math.pow(2, opv));
 }
 
 function operandValue(operand) {
   if (operand === 4) {
-	return registerA;
+	return globalRegisterA;
   } else if (operand === 5) {
-	return registerB;
+	return globalRegisterB;
   } else if (operand === 6) {
-	return registerC;
+	return globalRegisterC;
   } else if (operand === 7) {
 	throw new Error("Invalid operand: 7");
   }
@@ -137,4 +151,11 @@ function operandValue(operand) {
   return operand;
 }
 
-executeProgram(program);
+let result: number[] = [];
+while (JSON.stringify(result) !== JSON.stringify(initProgram)) {
+  result = executeProgram(initProgram);
+  initRegisterA++;
+}
+console.log(`Found matching input: ${initRegisterA}`);
+console.log(`result: ${result}`);
+console.log(`expected: ${initProgram}`);
