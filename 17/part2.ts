@@ -1,5 +1,5 @@
 /**
- * ❌ Advent of Code 2024 - Day 17 - Part 2 (Abandonné)
+ * ❌ Advent of Code 2024 - Day 17 - Part 2 (Abandoned)
  * https://adventofcode.com/2024/day/17
  *
  * Solution by: Valentin Bouillennec
