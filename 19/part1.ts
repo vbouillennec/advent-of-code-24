@@ -12,29 +12,30 @@ const input = fs.readFileSync("./19/input2.txt").toString();
 const splitInput = input.split("\r\n\r\n");
 const patterns = splitInput[0].split(", ");
 const designs = splitInput[1].split("\r\n");
-
-console.log("Patterns:", patterns[0], "...", patterns[patterns.length -1]);
-console.log("Designs:", designs.length);
 // Sort patterns by length in descending order
 const sortedPatterns = patterns.sort((a, b) => b.length - a.length);
 
 const isPossibleDesign = (design: string, patterns: string[]): boolean => {
-    let tmpDesign = design;
-    // console.log('design original: ' + tmpDesign);
-    while(tmpDesign.length > 0) {
-        let patternMatch = false;
-        for (const pattern of patterns) {
-            // console.log('index of ' + pattern + ': ' + tmpDesign.indexOf(pattern));
-            if(tmpDesign.indexOf(pattern) === 0){
-                // console.log('je trouve une correspondance');
-                tmpDesign = tmpDesign.slice(pattern.length);
-                patternMatch = true;
-                break;
+
+    let designsToTest = [design];
+    while(designsToTest.length > 0) {
+        let nextDesignsToTest: string[] = [];
+        for (let i = 0; i < designsToTest.length; i++) {
+            let designToTest = designsToTest[i];
+            for (const pattern of patterns) {
+                if(designToTest.indexOf(pattern) === 0){
+                    let slicedDesign = designToTest.slice(pattern.length);
+                    if(slicedDesign.length === 0) {
+                        return true;
+                    }
+                    if(!nextDesignsToTest.includes(slicedDesign))
+                        nextDesignsToTest.push(slicedDesign);
+                }
             }
         }
-        if(!patternMatch) return false;
+        designsToTest = nextDesignsToTest;
     }
-    return true;
+    return false;
 };
 
 
@@ -42,10 +43,7 @@ const countPossibleDesigns = (sortedPatterns: string[], designs: string[]): Numb
     let count = 0;
     for (const design of designs) {
         if(isPossibleDesign(design, sortedPatterns)) {
-            // console.log('le design ' + design + ' est possible');
             count++;
-        } else {
-            // console.error('le design ' + design + ' n\'est pas possible');
         }
     }
     return count;
